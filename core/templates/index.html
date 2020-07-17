@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="" method="post" id="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
+
+<script
+        src="https://code.jquery.com/jquery-3.5.0.min.js"
+        integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+        crossorigin="anonymous">
+</script>
+
+<script>
+    const form = document.getElementById('form');
+    form.addEventListener('submit', submitHandler);
+
+    function submitHandler(e) {
+        e.preventDefault()
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'index' %}',
+            data: $('#form').serialize(),
+            dataType: 'json',
+            success: success,
+        })
+    }
+
+    function success(data) {
+        if (data.msg == 'Success') {
+            form.reset();
+            alert('Form Submitted')
+        }
+
+    }
+</script>
+
+</body>
+</html>
