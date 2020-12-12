@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.forms import Textarea, TextInput
 from django.utils.translation import gettext_lazy as _
-
+from django.contrib.auth import get_user_model
 
 from . models import NewUser
 
@@ -18,7 +18,7 @@ class UserAdminConfig(UserAdmin):
     list_display = ('email', 'user_name', 'first_name',
                     'is_active', 'is_staff')
     fieldsets = (
-        (None, {'fields': ('email', 'user_name', 'first_name',)}),
+        (None, {'fields': ('email', 'user_name', 'first_name', 'password')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
         ('Personal', {'fields': ('about',)}),
         (_('Important dates'), {'fields': ('start_date', )}),
@@ -35,4 +35,4 @@ class UserAdminConfig(UserAdmin):
     )
 
 
-admin.site.register(NewUser, UserAdminConfig)
+admin.site.register(get_user_model(), UserAdminConfig)
